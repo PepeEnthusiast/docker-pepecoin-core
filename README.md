@@ -1,41 +1,38 @@
-# litecoinproject/litecoin-core
+# pepeenthusiast/pepecoin-core
 
-A litecoin-core docker image with support for the following platforms:
+A pepecoin-core docker image with support for the following platforms:
 
 * `amd64` (x86_64)
 * `arm32v7` (armv7)
 * `arm64` (aarch64, armv8)
 
-[![litecoinproject/litecoin-core][docker-pulls-image]][docker-hub-url] [![litecoinproject/litecoin-core][docker-stars-image]][docker-hub-url] [![litecoinproject/litecoin-core][docker-size-image]][docker-hub-url]
+[![pepeenthusiast/pepecoin-core][docker-pulls-image]][docker-hub-url] [![pepeenthusiast/pepecoin-core][docker-stars-image]][docker-hub-url] [![pepeenthusiast/pepecoin-core][docker-size-image]][docker-hub-url]
 
 ## Tags
 
-- `0.21.2.2`, `0.21` ([0.21/Dockerfile](https://github.com/litecoin-project/docker-litecoin-core/blob/master/0.21/Dockerfile)) [**multi-arch**]
-- `0.21.2.2-alpine`, `0.21-alpine` ([0.21/alpine/Dockerfile](https://github.com/litecoin-project/docker-litecoin-core/blob/master/0.21/alpine/Dockerfile))
+- `1.0.1` ([1.0.1/Dockerfile](https://github.com/pepeenthusiast/docker-pepecoin-core/blob/master/1.0.1/Dockerfile)) [**multi-arch**]
 
 **Multi-architecture builds**
 
-The newest images (Debian-based, *0.21+*) provide built-in support for multiple architectures. Running `docker pull` on any of the supported platforms will automatically choose the right image for you as all of the manifests and artifacts are pushed to the Docker registry.
+The newest images (Debian-based, *1.0.1+*) provide built-in support for multiple architectures. Running `docker pull` on any of the supported platforms will automatically choose the right image for you as all of the manifests and artifacts are pushed to the Docker registry.
 
 **Picking the right tag**
 
-- `litecoinproject/litecoin-core:latest`: points to the latest stable release available of Litecoin Core. Caution when using in production as blindly upgrading Litecoin Core is a risky procedure.
-- `litecoinproject/litecoin-core:alpine`: same as above but using the Alpine Linux distribution (a resource efficient Linux distribution with security in mind, but not officially supported by the Litecoin Core team — use at your own risk).
-- `litecoinproject/litecoin-core:<version>`: based on a slim Debian image, this tag format points to a specific version branch (e.g. `0.21`) or release of Litecoin Core (e.g. `0.21.2.2`). Uses the pre-compiled binaries which are distributed by the Litecoin Core team.
-- `litecoinproject/litecoin-core:<version>-alpine`: same as above but using the Alpine Linux distribution.
+- `pepeenthusiast/pepecoin-core:latest`: points to the latest stable release available of Pepecoin Core. Caution when using in production as blindly upgrading Pepecoin Core is a risky procedure.
+- `pepeenthusiast/pepecoin-core:<version>`: based on a slim Debian image, this tag format points to a specific version branch (e.g. `1.0.1`) or release of Pepecoin Core (e.g. `1.0.1`). Uses the pre-compiled binaries which are distributed by the Pepecoin Core team.
 
-## What is Litecoin Core?
+## What is Pepecoin Core?
 
-Litecoin Core is a reference client that implements the Litecoin protocol for remote procedure call (RPC) use. It is also the second Litecoin client in the network's history. Learn more about Litecoin Core on the [Litecoin Wiki](https://litecoin.info).
+Pepecoin Core is a reference client that implements the Pepecoin protocol for remote procedure call (RPC) use. It is also the second Pepecoin client in the network's history. Learn more about Pepecoin Core on the [Pepecoin repository](https://github.com/pepecoinppc/pepecoin).
 
 ## Usage
 
 ### How to use this image
 
-This image contains the main binaries from the Litecoin Core project - `litecoind`, `litecoin-cli` and `litecoin-tx`. It behaves like a binary, so you can pass any arguments to the image and they will be forwarded to the `litecoind` binary:
+This image contains the main binaries from the Pepecoin Core project - `pepecoind`, `pepecoin-cli` and `pepecoin-tx`. It behaves like a binary, so you can pass any arguments to the image and they will be forwarded to the `pepecoind` binary:
 
 ```sh
-❯ docker run --rm -it litecoinproject/litecoin-core \
+❯ docker run --rm -it pepeenthusiast/pepecoin-core \
   -printtoconsole \
   -regtest=1 \
   -rpcallowip=172.17.0.0/16 \
@@ -44,18 +41,18 @@ This image contains the main binaries from the Litecoin Core project - `litecoin
 
 _Note: [learn more](#using-rpcauth-for-remote-authentication) about how `-rpcauth` works for remote authentication._
 
-By default, `litecoind` will run as user `litecoin` for security reasons and with its default data dir (`~/.litecoin`). If you'd like to customize where `litecoin-core` stores its data, you must use the `LITECOIN_DATA` environment variable. The directory will be automatically created with the correct permissions for the `litecoin` user and `litecoin-core` automatically configured to use it.
+By default, `pepecoind` will run as user `pepecoin` for security reasons and with its default data dir (`~/.pepecoin`). If you'd like to customize where `pepecoin-core` stores its data, you must use the `PEPECOIN_DATA` environment variable. The directory will be automatically created with the correct permissions for the `pepecoin` user and `pepecoin-core` automatically configured to use it.
 
 ```sh
-❯ docker run --env LITECOIN_DATA=/var/lib/litecoin-core --rm -it litecoinproject/litecoin-core \
+❯ docker run --env PEPECOIN_DATA=/var/lib/pepecoin-core --rm -it pepeenthusiast/pepecoin-core \
   -printtoconsole \
   -regtest=1
 ```
 
-You can also mount a directory in a volume under `/home/litecoin/.litecoin` in case you want to access it on the host:
+You can also mount a directory in a volume under `/home/pepecoin/.pepecoin` in case you want to access it on the host:
 
 ```sh
-❯ docker run -v ${PWD}/data:/home/litecoin/.litecoin -it --rm litecoinproject/litecoin-core \
+❯ docker run -v ${PWD}/data:/home/pepecoin/.pepecoin -it --rm pepeenthusiast/pepecoin-core \
   -printtoconsole \
   -regtest=1
 ```
@@ -63,8 +60,8 @@ You can also mount a directory in a volume under `/home/litecoin/.litecoin` in c
 You can optionally create a service using `docker-compose`:
 
 ```yml
-litecoin-core:
-  image: litecoinproject/litecoin-core
+pepecoin-core:
+  image: pepeenthusiast/pepecoin-core
   command:
     -printtoconsole
     -regtest=1
@@ -72,26 +69,26 @@ litecoin-core:
 
 ### Using RPC to interact with the daemon
 
-There are two communications methods to interact with a running Litecoin Core daemon.
+There are two communications methods to interact with a running Pepecoin Core daemon.
 
-The first one is using a cookie-based local authentication. It doesn't require any special authentication information as running a process locally under the same user that was used to launch the Litecoin Core daemon allows it to read the cookie file previously generated by the daemon for clients. The downside of this method is that it requires local machine access.
+The first one is using a cookie-based local authentication. It doesn't require any special authentication information as running a process locally under the same user that was used to launch the Pepecoin Core daemon allows it to read the cookie file previously generated by the daemon for clients. The downside of this method is that it requires local machine access.
 
 The second option is making a remote procedure call using a username and password combination. This has the advantage of not requiring local machine access, but in order to keep your credentials safe you should use the newer `rpcauth` authentication mechanism.
 
 #### Using cookie-based local authentication
 
-Start by launch the Litecoin Core daemon:
+Start by launching the Pepecoin Core daemon:
 
 ```sh
-❯ docker run --rm --name litecoin-server -it litecoinproject/litecoin-core \
+❯ docker run --rm --name pepecoin-server -it pepeenthusiast/pepecoin-core \
   -printtoconsole \
   -regtest=1
 ```
 
-Then, inside the running `litecoin-server` container, locally execute the query to the daemon using `litecoin-cli`:
+Then, inside the running `pepecoin-server` container, locally execute the query to the daemon using `pepecoin-cli`:
 
 ```sh
-❯ docker exec --user litecoin litecoin-server litecoin-cli -regtest getmininginfo
+❯ docker exec --user pepecoin pepecoin-server pepecoin-cli -regtest getmininginfo
 
 {
   "blocks": 0,
@@ -106,20 +103,20 @@ Then, inside the running `litecoin-server` container, locally execute the query 
 }
 ```
 
-In the background, `litecoin-cli` read the information automatically from `/home/litecoin/.litecoin/regtest/.cookie`. In production, the path would not contain the regtest part.
+In the background, `pepecoin-cli` read the information automatically from `/home/pepecoin/.pepecoin/regtest/.cookie`. In production, the path would not contain the regtest part.
 
 #### Using rpcauth for remote authentication
 
-Before setting up remote authentication, you will need to generate the `rpcauth` line that will hold the credentials for the Litecoind Core daemon. You can either do this yourself by constructing the line with the format `<user>:<salt>$<hash>` or use the official [`rpcauth.py`](https://github.com/litecoin-project/litecoin/blob/master/share/rpcauth/rpcauth.py)  script to generate this line for you, including a random password that is printed to the console.
+Before setting up remote authentication, you will need to generate the `rpcauth` line that will hold the credentials for the Pepecoind Core daemon. You can either do this yourself by constructing the line with the format `<user>:<salt>$<hash>` or use the official [`rpcuser.py`](https://github.com/pepecoinppc/pepecoin/blob/master/share/rpcuser/rpcuser.py)  script to generate this line for you, including a random password that is printed to the console.
 
 _Note: This is a Python 3 script. use `[...] | python3 - <username>` when executing on macOS._
 
 Example:
 
 ```sh
-❯ curl -sSL https://raw.githubusercontent.com/litecoin-project/litecoin/master/share/rpcauth/rpcauth.py | python - <username>
+❯ curl -sSL https://github.com/pepecoinppc/pepecoin/blob/master/share/rpcuser/rpcuser.py | python - <username>
 
-String to be appended to litecoin.conf:
+String to be appended to pepecoin.conf:
 rpcauth=foo:7d9ba5ae63c3d4dc30583ff4fe65a67e$9e3634e81c11659e3de036d0bf88f89cd169c1039e6e09607562d54765c649cc
 Your password:
 qDDZdeQ5vw9XXFeVnXT4PZ--tGN2xNjjR4nrtyszZx0=
@@ -127,12 +124,12 @@ qDDZdeQ5vw9XXFeVnXT4PZ--tGN2xNjjR4nrtyszZx0=
 
 Note that for each run, even if the username remains the same, the output will be always different as a new salt and password are generated.
 
-Now that you have your credentials, you need to start the Litecoin Core daemon with the `-rpcauth` option. Alternatively, you could append the line to a `litecoin.conf` file and mount it on the container.
+Now that you have your credentials, you need to start the Pepecoin Core daemon with the `-rpcauth` option. Alternatively, you could append the line to a `pepecoin.conf` file and mount it on the container.
 
 Let's opt for the Docker way:
 
 ```sh
-❯ docker run --rm --name litecoin-server -it litecoinproject/litecoin-core \
+❯ docker run --rm --name pepecoin-server -it pepeenthusiast/pepecoin-core \
   -printtoconsole \
   -regtest=1 \
   -rpcallowip=172.17.0.0/16 \
@@ -144,14 +141,14 @@ Two important notes:
 1. Some shells require escaping the rpcauth line (e.g. zsh), as shown above.
 2. It is now perfectly fine to pass the rpcauth line as a command line argument. Unlike `-rpcpassword`, the content is hashed so even if the arguments would be exposed, they would not allow the attacker to get the actual password.
 
-You can now connect via `litecoin-cli`. You will still have to define a username and password when connecting to the Litecoin Core RPC server.
+You can now connect via `pepecoin-cli`. You will still have to define a username and password when connecting to the Pepecoin Core RPC server.
 
-To avoid any confusion about whether or not a remote call is being made, let's spin up another container to execute `litecoin-cli` and connect it via the Docker network using the password generated above:
+To avoid any confusion about whether or not a remote call is being made, let's spin up another container to execute `pepecoin-cli` and connect it via the Docker network using the password generated above:
 
 ```sh
-❯ docker run -it --link litecoin-server --rm litecoinproject/litecoin-core \
-  litecoin-cli \
-  -rpcconnect=litecoin-server \
+❯ docker run -it --link pepecoin-server --rm pepeenthusiast/pepecoin-core \
+  pepecoin-cli \
+  -rpcconnect=pepecoin-server \
   -regtest \
   -rpcuser=foo\
   -stdinrpcpass \
@@ -168,17 +165,17 @@ Done!
 
 ### Exposing Ports
 
-Depending on the network (mode) the Litecoin Core daemon is running as well as the chosen runtime flags, several default ports may be available for mapping.
+Depending on the network (mode) the Pepecoin Core daemon is running as well as the chosen runtime flags, several default ports may be available for mapping.
 
 Ports can be exposed by mapping all of the available ones (using `-P` and based on what `EXPOSE` documents) or individually by adding `-p`. This mode allows assigning a dynamic port on the host (`-p <port>`) or assigning a fixed port `-p <hostPort>:<containerPort>`.
 
-Example for running a node in `regtest` mode mapping JSON-RPC/REST (19443) and P2P (19444) ports:
+Example for running a node in `regtest` mode mapping JSON-RPC/REST (18332) and P2P (18444) ports:
 
 ```sh
 docker run --rm -it \
-  -p 19443:19443 \
-  -p 19444:19444 \
-  litecoinproject/litecoin-core \
+  -p 18332:18332 \
+  -p 18444:18444 \
+  pepeenthusiast/pepecoin-core \
   -printtoconsole \
   -regtest=1 \
   -rpcallowip=172.17.0.0/16 \
@@ -189,23 +186,23 @@ docker run --rm -it \
 To test that mapping worked, you can send a JSON-RPC curl request to the host port:
 
 ```
-curl --data-binary '{"jsonrpc":"1.0","id":"1","method":"getnetworkinfo","params":[]}' http://foo:qDDZdeQ5vw9XXFeVnXT4PZ--tGN2xNjjR4nrtyszZx0=@127.0.0.1:19443/
+curl --data-binary '{"jsonrpc":"1.0","id":"1","method":"getnetworkinfo","params":[]}' http://foo:qDDZdeQ5vw9XXFeVnXT4PZ--tGN2xNjjR4nrtyszZx0=@127.0.0.1:18332/
 ```
 
 #### Mainnet
 
-- JSON-RPC/REST: 9332
-- P2P: 9333
+- JSON-RPC/REST: 33873
+- P2P: 33874
 
 #### Testnet
 
-- Testnet JSON-RPC: 19332
-- P2P: 19335
+- Testnet JSON-RPC: 44873
+- P2P: 44874
 
 #### Regtest
 
-- JSON-RPC/REST: 19443 (_since 0.16+_, otherwise _19332_)
-- P2P: 19444
+- JSON-RPC/REST: 18332
+- P2P: 18444
 
 ## Docker
 
@@ -213,11 +210,11 @@ This image is officially supported on Docker version 17.09, with support for old
 
 ## License
 
-[License information](https://github.com/litecoin-project/litecoin/blob/master/COPYING) for the software contained in this image.
+[License information](https://github.com/pepecoinppc/pepecoin/blob/master/COPYING) for the software contained in this image.
 
 [License information](https://github.com/ruimarinho/docker-bitcoin-core/blob/master/LICENSE) for the [ruimarinho/docker-bitcoin-core][https://github.com/ruimarinho/docker-bitcoin-core] docker project.
 
-[docker-hub-url]: https://hub.docker.com/r/litecoinproject/litecoin-core
-[docker-pulls-image]: https://img.shields.io/docker/pulls/litecoinproject/litecoin-core.svg?style=flat-square
-[docker-size-image]: https://img.shields.io/docker/image-size/litecoinproject/litecoin-core?style=flat-square
-[docker-stars-image]: https://img.shields.io/docker/stars/litecoinproject/litecoin-core.svg?style=flat-square
+[docker-hub-url]: https://hub.docker.com/r/pepeenthusiast/pepecoin-core
+[docker-pulls-image]: https://img.shields.io/docker/pulls/pepeenthusiast/pepecoin-core.svg?style=flat-square
+[docker-size-image]: https://img.shields.io/docker/image-size/pepeenthusiast/pepecoin-core?style=flat-square
+[docker-stars-image]: https://img.shields.io/docker/stars/pepeenthusiast/pepecoin-core.svg?style=flat-square
