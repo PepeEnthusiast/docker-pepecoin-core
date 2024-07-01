@@ -24,6 +24,8 @@ RUN set -ex \
 
 COPY docker-entrypoint.sh /entrypoint.sh
 
+RUN chmod +x entrypoint.sh
+
 VOLUME ["/home/pepecoin/.pepecoin"]
 
 EXPOSE 33873 33874 44873 44874 18332 18444
