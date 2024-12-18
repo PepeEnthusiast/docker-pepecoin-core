@@ -11,6 +11,7 @@ A pepecoin-core docker image with support for the following platforms:
 ## Tags
 
 - `1.0.1` ([1.0.1/Dockerfile](https://github.com/pepeenthusiast/docker-pepecoin-core/blob/master/1.0.1/Dockerfile)) [**multi-arch**]
+- `1.1.0` ([1.1.0/Dockerfile](https://github.com/pepeenthusiast/docker-pepecoin-core/blob/master/1.1.0/Dockerfile)) [**multi-arch**]
 
 **Multi-architecture builds**
 
